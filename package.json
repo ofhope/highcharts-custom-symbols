@@ -1,0 +1,17 @@
+{
+  "name": "highcharts-custom-symbols",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "highcharts": "^12.3.0",
+    "highcharts-item-series": "^0.1.7",
+    "typescript": "~5.8.3",
+    "vite": "^7.0.0"
+  }
+}
