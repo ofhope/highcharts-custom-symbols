@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "convert": "node svg-converter.js"
   },
   "devDependencies": {
     "highcharts": "^12.3.0",
