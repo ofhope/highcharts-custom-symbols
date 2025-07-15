@@ -1,269 +1,198 @@
 import Highcharts from "highcharts";
 import "highcharts/modules/item-series";
 
-import "./symbols/phosphor/rain-cloud";
-import "./symbols/star";
-import "./symbols/phosphor/cross";
-import "./symbols/phosphor/first-aid";
-import "./symbols/phosphor/crosshair";
-import "./symbols/phosphor/crosshair-simple";
-import "./symbols/phosphor/crown-cross";
-import "./symbols/phosphor/airplane";
-import "./symbols/phosphor/airplane-tilt";
-import "./symbols/phosphor/airplane-taxiing";
-import "./symbols/phosphor/alarm";
+import "../symbols/custom-primitives";
+import "../symbols/transportation";
 
-var chartMixed = new Highcharts.Chart({
-  chart: {
-    renderTo: "container-mixed",
-  },
-
-  title: {
-    text: "Multiple Symbols in Highcharts Series"
-  },
-
-  xAxis: {
-    categories: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
-  },
-
-  yAxis: {
-    title: {
-      text: "Values"
-    }
-  },
-
-  series: [
-    {
-      type: "line",
-      name: "Mixed Symbols in Single Series",
-      // Example: Different symbol per data point using data object format
-      data: [
-        { y: 29.9, marker: { symbol: "cloud-rain", fillColor: "blue" } },
-        { y: 71.5, marker: { symbol: "star", fillColor: "red" } },
-        { y: 106.4, marker: { symbol: "cross", fillColor: "green" } },
-        { y: 129.2, marker: { symbol: "first-aid", fillColor: "orange" } },
-        { y: 144.0, marker: { symbol: "crown-cross", fillColor: "purple" } },
-        { y: 176.0, marker: { symbol: "airplane", fillColor: "pink" } },
-        { y: 135.6, marker: { symbol: "crosshair", fillColor: "brown" } },
-        { y: 148.5, marker: { symbol: "crosshair-simple", fillColor: "gray" } },
-        { y: 216.4, marker: { symbol: "airplane-tilt", fillColor: "gold" } },
-        { y: 194.1, marker: { symbol: "airplane-taxiing", fillColor: "lightblue" } },
-        { y: 95.6, marker: { symbol: "alarm", fillColor: "crimson" } },
-        { y: 54.4, marker: { symbol: "cross", fillColor: "darkgreen" } },
-      ],
-      marker: {
-        radius: 8,
-        lineColor: "black",
-        lineWidth: 0.5,
-        states: {
-          hover: {
-            radius: 12,
-            lineWidth: 0.7,
-          },
-        },
-      },
-    },
-    {
-      type: "line",
-      name: "Pattern-based Symbols",
-      // Example: Using a pattern to cycle through symbols programmatically
-      data: [15, 25, 35, 45, 55, 65, 75, 85, 95, 105, 115, 125].map((value, index) => {
-        const symbols = ["circle", "square", "diamond", "triangle"];
-        const colors = ["#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4"];
-        return {
-          y: value,
-          marker: {
-            symbol: symbols[index % symbols.length],
-            fillColor: colors[index % colors.length]
-          }
-        };
-      }),
-      marker: {
-        radius: 6,
-        lineColor: "white",
-        lineWidth: 1,
-      },
-    }
-  ],
-});
-
-
-var chart = new Highcharts.Chart({
-  chart: {
-    renderTo: "container",
-  },
-
-  xAxis: {
-    categories: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
-  },
-
-  series: [
-    {
-      type: "line",
-      data: [
-        29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1,
-        95.6, 54.4,
-      ],
-      marker: {
-        symbol: "cloud-rain",
-        radius: 8,
-        fillColor: "blue", // Interior color
-        lineColor: "blue", // Border color
-        lineWidth: 0.1, // Border thickness
-        states: {
-          hover: {
-            radius: 12, // Larger on hover
-            fillColor: "#ffeb3b", // Different color on hover
-            lineColor: "#000", // Darker border on hover
-            lineWidth: 1, // Thicker border on hover
-          },
-          select: {
-            radius: 14, // Even larger when selected
-            fillColor: "#4caf50",
-            lineColor: "#2e7d32", // Darker green border when selected
-            lineWidth: 4, // Even thicker border when selected
-          },
-        },
-      },
-    },
-  ],
-});
-
-
-// Item chart with custom symbols
-var chartItem = new Highcharts.Chart({
+// Symbol Gallery Chart - Visual test of all generated symbols
+// Symbol gallery chart with all generated symbols
+new Highcharts.Chart({
     chart: {
-        renderTo: 'container-item-custom',
-        type: 'item'
+        renderTo: 'container-gallery',
+        type: 'line'
     },
 
     title: {
-        text: 'Custom Symbol Item Chart'
+        text: 'Symbol Gallery - Generated SVG Symbols'
     },
 
     subtitle: {
-        text: 'Visualization using custom Phosphor icons'
+        text: 'Testing all converted SVG symbols for visual verification'
+    },
+
+    xAxis: {
+        categories: [
+            'Circle', 'Square', 'Diamond', 'Star', 'Heart', 'Moon', 
+            'Pentagon', 'Hexagon', 'Octagon', 'Plus', 'Rotated-Square', 'Teardrop', 'Baby-Fill'
+        ],
+        title: {
+            text: 'Symbol Types'
+        }
+    },
+
+    yAxis: {
+        title: {
+            text: 'Values'
+        },
+        min: 0
     },
 
     legend: {
-        labelFormat: '{name} <span style="opacity: 0.4">{y}</span>'
+        enabled: false
     },
 
     series: [{
-        type: 'item',
-        name: 'Categories',
+        type: 'line',
+        name: 'Symbol Showcase',
         data: [
-            { name: 'Aviation', y: 25, color: '#FF6B6B', marker: { symbol: 'airplane' } },
-            { name: 'Emergency Services', y: 18, color: '#4ECDC4', marker: { symbol: 'first-aid' } },
-            { name: 'Security', y: 12, color: '#45B7D1', marker: { symbol: 'crosshair' } },
-            { name: 'Weather', y: 8, color: '#96CEB4', marker: { symbol: 'cloud-rain' } },
-            { name: 'Alerts', y: 15, color: '#FECA57', marker: { symbol: 'alarm' } },
-            { name: 'Transport', y: 22, color: '#FF9FF3', marker: { symbol: 'airplane-taxiing' } }
+            { y: 10, marker: { symbol: 'circle', fillColor: '#FF6B6B', radius: 10 } },
+            { y: 20, marker: { symbol: 'square', fillColor: '#4ECDC4', radius: 10 } },
+            { y: 30, marker: { symbol: 'diamond', fillColor: '#45B7D1', radius: 10 } },
+            { y: 40, marker: { symbol: 'star', fillColor: '#96CEB4', radius: 10 } },
+            { y: 50, marker: { symbol: 'heart', fillColor: '#FECA57', radius: 10 } },
+            { y: 60, marker: { symbol: 'moon', fillColor: '#FF9FF3', radius: 10 } },
+            { y: 70, marker: { symbol: 'pentagon', fillColor: '#54A0FF', radius: 10 } },
+            { y: 80, marker: { symbol: 'hexagon', fillColor: '#5F27CD', radius: 10 } },
+            { y: 90, marker: { symbol: 'octagon', fillColor: '#00D2D3', radius: 10 } },
+            { y: 100, marker: { symbol: 'teardrop', fillColor: '#FFA502', radius: 10 } },
+            { y: 100, marker: { symbol: 'triangle', fillColor: '#FFA502', radius: 10 } },
+            { y: 100, marker: { symbol: 'triangle-down', fillColor: '#FFA502', radius: 10 } },
         ],
-        dataLabels: {
-            enabled: true,
-            format: '{point.name}',
-            style: {
-                fontSize: '10px'
-            }
-        },
-
-        // Rectangular layout
-        rows: 6,
-        crisp: false
-    }]
-});
-
-
-
-new Highcharts.Chart( {
-
-    chart: {
-        renderTo: 'container-item',
-        type: 'item'
-    },
-
-    title: {
-        text: 'Distribution of seats'
-    },
-
-    subtitle: {
-        text: 'Bundestag election 2021. Source: ' +
-            '<a href="https://www.bundeswahlleiter.de/en/bundeswahlleiter.html"' +
-            'target="_blank">Bundeswahlleiter</a> '
-    },
-
-    legend: {
-        labelFormat: '{name} <span style="opacity: 0.4">{y}</span>'
-    },
-
-    series: [{
-        type: 'item',
-        name: 'Representatives',
-        keys: ['name', 'y', 'color', 'label'],
-        data: [
-            ['The Left', 39, '#CC0099', 'DIE LINKE'],
-            ['Social Democratic Party', 206, '#EE0011', 'SPD'],
-            ['Alliance 90/The Greens', 118, '#448833', 'GRÜNE'],
-            ['Free Democratic Party', 92, '#FFCC00', 'FDP'],
-            ['Christian Democratic Union', 152, '#000000', 'CDU'],
-            ['Christian Social Union in Bavaria', 45, '#3366CC', 'CSU'],
-            ['Alternative for Germany', 83, '#3399FF', 'AfD'],
-            ['South Schleswig Voters\' Association', 1, '#000099', 'SSW']
-        ],
-        dataLabels: {
-            enabled: true,
-            format: '{point.label}',
-            style: {
-                textOutline: '3px contrast'
-            }
-        },
-
-        // Circular options
-        center: ['50%', '88%'],
-        size: '170%',
-        startAngle: -100,
-        endAngle: 100
-    }],
-
-    responsive: {
-        rules: [{
-            condition: {
-                maxWidth: 600
-            },
-            chartOptions: {
-                title: {
-                    style: {
-                        fontSize: '14px'
-                    }
+        marker: {
+            lineColor: '#000',
+            lineWidth: 1,
+            states: {
+                hover: {
+                    radius: 15,
+                    lineWidth: 2
                 }
             }
-        }]
+        },
+        lineWidth: 2,
+        color: '#666'
+    }],
+
+    plotOptions: {
+        line: {
+            marker: {
+                enabled: true
+            }
+        }
+    },
+
+    tooltip: {
+        pointFormat: '<b>{point.category}</b><br/>Symbol: {point.marker.symbol}<br/>Value: {point.y}'
+    }
+});
+
+// Transportation Symbols Chart - Showcase all transportation symbols
+new Highcharts.Chart({
+    chart: {
+        renderTo: 'container-transportation',
+        type: 'scatter'
+    },
+
+    title: {
+        text: 'Transportation Symbols Collection'
+    },
+
+    subtitle: {
+        text: 'All available transportation symbols from the generated collection'
+    },
+
+    xAxis: {
+        title: {
+            text: 'X Position'
+        },
+        min: 0,
+        max: 6,
+        tickInterval: 1,
+        labels: {
+            formatter: function() {
+                return '';
+            }
+        }
+    },
+
+    yAxis: {
+        title: {
+            text: 'Y Position'
+        },
+        min: 0,
+        max: 4,
+        tickInterval: 1,
+        labels: {
+            formatter: function() {
+                return '';
+            }
+        }
+    },
+
+    legend: {
+        enabled: false
+    },
+
+    plotOptions: {
+        scatter: {
+            marker: {
+                radius: 16,
+                states: {
+                    hover: {
+                        radius: 20,
+                        lineWidth: 2
+                    }
+                }
+            },
+            lineWidth: 0
+        }
+    },
+
+    series: [{
+        type: 'scatter',
+        name: 'Transportation Symbols',
+        data: [
+            // Row 1 - Air Transportation
+            { x: 0, y: 3, marker: { symbol: 'airplane', fillColor: '#FF6B6B' } },
+            { x: 1, y: 3, marker: { symbol: 'airplane-tilt', fillColor: '#FF8E8E' } },
+            { x: 2, y: 3, marker: { symbol: 'airplane-taxiing', fillColor: '#FFB1B1' } },
+            
+            // Row 2 - Land Transportation - Cars & Trucks
+            { x: 0, y: 2, marker: { symbol: 'car', fillColor: '#4ECDC4' } },
+            { x: 1, y: 2, marker: { symbol: 'bus', fillColor: '#45B7D1' } },
+            { x: 2, y: 2, marker: { symbol: 'van', fillColor: '#96CEB4' } },
+            { x: 3, y: 2, marker: { symbol: 'cable-car', fillColor: '#FECA57' } },
+            
+            // Row 3 - Land Transportation - Two Wheelers
+            { x: 0, y: 1, marker: { symbol: 'bicycle', fillColor: '#FF9FF3' } },
+            { x: 1, y: 1, marker: { symbol: 'motorcycle', fillColor: '#54A0FF' } },
+            { x: 2, y: 1, marker: { symbol: 'moped', fillColor: '#5F27CD' } },
+            { x: 3, y: 1, marker: { symbol: 'moped-front', fillColor: '#00D2D3' } },
+            { x: 4, y: 1, marker: { symbol: 'scooter', fillColor: '#FFA502' } },
+            
+            // Row 4 - Rail & Water Transportation
+            { x: 0, y: 0, marker: { symbol: 'train', fillColor: '#2ED573' } },
+            { x: 1, y: 0, marker: { symbol: 'train-simple', fillColor: '#3742FA' } },
+            { x: 2, y: 0, marker: { symbol: 'tram', fillColor: '#FF3838' } },
+            { x: 3, y: 0, marker: { symbol: 'boat', fillColor: '#70A1FF' } },
+            { x: 4, y: 0, marker: { symbol: 'sailboat', fillColor: '#5352ED' } }
+        ],
+        marker: {
+            lineColor: '#000',
+            lineWidth: 1
+        }
+    }],
+
+    tooltip: {
+        useHTML: true,
+        formatter: function() {
+            const point = this as any;
+            const symbolName = point.marker.symbol;
+            const color = point.marker.fillColor;
+            return `<div style="text-align: center;">
+                        <strong>${symbolName}</strong><br/>
+                        <span style="color: ${color};">●</span> Color: ${color}<br/>
+                        Position: (${point.x}, ${point.y})
+                    </div>`;
+        }
     }
 });
