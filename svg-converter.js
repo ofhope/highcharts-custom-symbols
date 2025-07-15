@@ -2,6 +2,11 @@
 
 import fs from 'fs';
 import path from 'path';
+// svgPathParser is not directly used in the provided code snippet,
+// but it's good to keep if it's used elsewhere in the full script.
+// For the purpose of this modification, parsePathPreservingCase handles the parsing.
+// import svgPathParser from 'svg-path-parser';
+
 
 /**
  * Convert SVG path data to Highcharts symbol function
@@ -18,7 +23,7 @@ function convertSvgToHighchartsSymbol(pathData, symbolName, viewBox = "0 0 256 2
 
   // Use direct path parsing to preserve original command case
   const highchartsPath = convertSvgPathDirectly(pathData, viewBoxWidth, viewBoxHeight);
-  
+
   // Generate the TypeScript function
   return generateHighchartsFunction(symbolName, pathData, viewBox, highchartsPath);
 }
@@ -96,7 +101,7 @@ function generateHighchartsFunction(symbolName, originalPath, viewBox, pathCode)
   const viewBoxParts = viewBox.split(' ');
   const vbWidth = viewBoxParts[2];
   const vbHeight = viewBoxParts[3];
-  
+
   // Use the parsed path with original SVG commands preserved
   return `import Highcharts from "highcharts";
 
@@ -109,15 +114,15 @@ Highcharts.SVGRenderer.prototype.symbols["${symbolName}"] = function (x: number,
   // Original SVG commands (M, L, C, S, Q, T, A, Z) are preserved for maximum fidelity
   const scaleX = w / ${vbWidth};
   const scaleY = h / ${vbHeight};
-  
+
   // Helper functions to scale coordinates
   const sx = (coord: number) => x + coord * scaleX;  // For absolute coordinates
   const sy = (coord: number) => y + coord * scaleY;  // For absolute coordinates
   const dx = (coord: number) => coord * scaleX;       // For relative coordinates (no offset)
   const dy = (coord: number) => coord * scaleY;       // For relative coordinates (no offset)
-  
+
   const path = ${pathCode};
-  
+
   return path;
 };`;
 }
@@ -131,39 +136,80 @@ function processSvgFile(svgFilePath, outputDir) {
   try {
     const svgContent = fs.readFileSync(svgFilePath, 'utf8');
     const fileName = path.basename(svgFilePath, '.svg');
-    
+
     // Extract path data
     const pathMatch = svgContent.match(/<path[^>]*d="([^"]*)"[^>]*>/);
     if (!pathMatch) {
       console.error(`No path data found in ${svgFilePath}`);
       return;
     }
-    
+
     // Extract viewBox
     const viewBoxMatch = svgContent.match(/viewBox="([^"]*)"/);
     const viewBox = viewBoxMatch ? viewBoxMatch[1] : "0 0 256 256";
-    
+
     const pathData = pathMatch[1];
     const symbolName = fileName.toLowerCase().replace(/[^a-z0-9]/g, '-');
-    
+
     // Generate TypeScript code
     const tsCode = convertSvgToHighchartsSymbol(pathData, symbolName, viewBox);
-    
+
+    // Ensure the output directory exists for the current file
+    fs.mkdirSync(outputDir, { recursive: true });
+
     // Write to file
     const outputPath = path.join(outputDir, `${fileName}.ts`);
     fs.writeFileSync(outputPath, tsCode);
-    
+
     console.log(`✅ Generated: ${outputPath}`);
-    
+
   } catch (error) {
     console.error(`❌ Error processing ${svgFilePath}:`, error.message);
   }
 }
 
+/**
+ * Generates an index.ts file in the specified directory,
+ * importing and re-exporting all generated Highcharts symbol files (.ts)
+ * within that directory.
+ * @param {string} directoryPath - The path to the directory where the index.ts should be created.
+ */
+function generateIndexFile(directoryPath) {
+  try {
+    const filesInDir = fs.readdirSync(directoryPath, { withFileTypes: true });
+    const symbolFiles = filesInDir
+      .filter(dirent => dirent.isFile() && dirent.name.endsWith('.ts') && dirent.name !== 'index.ts')
+      .map(dirent => path.basename(dirent.name, '.ts')); // Get just the name without .ts
+
+    if (symbolFiles.length === 0) {
+      // If no symbol files, remove existing index.ts if it exists
+      const indexPath = path.join(directoryPath, 'index.ts');
+      if (fs.existsSync(indexPath)) {
+        fs.unlinkSync(indexPath);
+        console.log(`🗑️ Removed empty index.ts: ${indexPath}`);
+      }
+      return; // No symbols to export, no index file needed
+    }
+
+    let indexContent = '';
+    for (const symbolName of symbolFiles) {
+      indexContent += `export * from './${symbolName}';\n`;
+    }
+
+    const indexPath = path.join(directoryPath, 'index.ts');
+    fs.writeFileSync(indexPath, indexContent);
+    console.log(`✨ Generated index.ts: ${indexPath}`);
+
+  } catch (error) {
+    console.error(`❌ Error generating index.ts for ${directoryPath}:`, error.message);
+  }
+}
+
+
 // CLI Usage
 function main() {
   const args = process.argv.slice(2);
-  
+
   if (args.length === 0) {
     console.log(`
 SVG to Highcharts Symbol Converter
@@ -175,12 +221,13 @@ Usage:
 Examples:
   node svg-converter.js svgs/baby-fill.svg ./symbols/
   node svg-converter.js ./svgs/ ./symbols/phosphor/
+  node svg-converter.js ./svgs/ ./symbols/  (This will process all svgs and subdirectories)
 `);
     return;
   }
 
   const inputPath = args[0];
-  const outputDir = args[1] || './symbols/';
+  const outputRoot = args[1] || './symbols/'; // Root output directory
 
   // Check if input path exists
   if (!fs.existsSync(inputPath)) {
@@ -188,45 +235,77 @@ Examples:
     console.log(`
 Available SVG files in svgs/ directory:`);
     try {
-      const svgFiles = fs.readdirSync('./svgs/').filter(file => file.endsWith('.svg'));
-      svgFiles.forEach(file => console.log(`  svgs/${file}`));
+      // List files in the base 'svgs/' directory if it exists
+      const baseSvgDir = './svgs/';
+      if (fs.existsSync(baseSvgDir)) {
+        const svgFiles = fs.readdirSync(baseSvgDir).filter(file => file.endsWith('.svg'));
+        svgFiles.forEach(file => console.log(`  ${baseSvgDir}${file}`));
+        // Also list subdirectories
+        fs.readdirSync(baseSvgDir, { withFileTypes: true })
+          .filter(dirent => dirent.isDirectory())
+          .forEach(dirent => console.log(`  ${baseSvgDir}${dirent.name}/`));
+      } else {
+        console.log(`  No svgs/ directory found`);
+      }
     } catch (e) {
-      console.log(`  No svgs/ directory found`);
+      console.log(`  Error listing svgs/ directory: ${e.message}`);
     }
     return;
   }
 
-  // Ensure output directory exists
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
+  // Function to recursively process directories
+  function processDirectoryRecursive(currentInputPath, currentOutputPath) {
+    const stats = fs.statSync(currentInputPath);
+
+    if (stats.isDirectory()) {
+      // Ensure the current output directory exists
+      fs.mkdirSync(currentOutputPath, { recursive: true });
+
+      const files = fs.readdirSync(currentInputPath, { withFileTypes: true });
+      let svgFilesFound = false;
+
+      for (const dirent of files) {
+        const fullInputPath = path.join(currentInputPath, dirent.name);
+        // If it's a directory, the output path for its contents should also be a subdirectory
+        const fullOutputPath = path.join(currentOutputPath, dirent.name);
+
+        if (dirent.isDirectory()) {
+          // Recursively call for subdirectories
+          processDirectoryRecursive(fullInputPath, fullOutputPath);
+        } else if (dirent.isFile() && dirent.name.endsWith('.svg')) {
+          // Process SVG files, outputting them to the currentOutputPath
+          processSvgFile(fullInputPath, currentOutputPath);
+          svgFilesFound = true;
+        }
+      }
+
+      // After processing all files/subdirectories in the current directory, generate its index.ts
+      generateIndexFile(currentOutputPath);
+
+      if (!svgFilesFound && currentInputPath !== inputPath) {
+        // Only log if no SVGs found in a subdirectory, not the root input if it's empty
+        console.log(`No SVG files found in ${currentInputPath}`);
+      }
+
+    } else if (stats.isFile()) {
+      // Process single file (if initial input was a file)
+      if (!currentInputPath.endsWith('.svg')) {
+        console.error(`❌ Error: File '${currentInputPath}' is not an SVG file (must end with .svg)`);
+        return;
+      }
+      console.log(`Processing single file: ${currentInputPath}`);
+      // For a single file, the output directory is the specified outputRoot
+      processSvgFile(currentInputPath, currentOutputPath); // currentOutputPath is outputRoot here
+      generateIndexFile(currentOutputPath); // Generate index for the outputRoot
+    } else {
+      console.error(`❌ Error: '${currentInputPath}' is neither a file nor a directory`);
+    }
   }
 
-  const stats = fs.statSync(inputPath);
-  
-  if (stats.isDirectory()) {
-    // Process all SVG files in directory
-    const svgFiles = fs.readdirSync(inputPath).filter(file => file.endsWith('.svg'));
-    console.log(`Processing ${svgFiles.length} SVG files from ${inputPath}...`);
-    
-    if (svgFiles.length === 0) {
-      console.log(`❌ No SVG files found in ${inputPath}`);
-      return;
-    }
-    
-    for (const svgFile of svgFiles) {
-      processSvgFile(path.join(inputPath, svgFile), outputDir);
-    }
-  } else if (stats.isFile()) {
-    // Process single file
-    if (!inputPath.endsWith('.svg')) {
-      console.error(`❌ Error: File '${inputPath}' is not an SVG file (must end with .svg)`);
-      return;
-    }
-    console.log(`Processing single file: ${inputPath}`);
-    processSvgFile(inputPath, outputDir);
-  } else {
-    console.error(`❌ Error: '${inputPath}' is neither a file nor a directory`);
-  }
+  // Start the recursive processing
+  console.log(`Starting SVG conversion from '${inputPath}' to '${outputRoot}'...`);
+  processDirectoryRecursive(inputPath, outputRoot);
+  console.log('Conversion complete.');
 }
 
 // Check if this module is being run directly (ES module equivalent of require.main === module)
@@ -250,13 +329,13 @@ export { convertSvgToHighchartsSymbol, processSvgFile };
  */
 function convertSvgPathDirectly(pathData, viewBoxWidth, viewBoxHeight) {
   let pathArray = [];
-  
+
   // Parse the SVG path while preserving original command case
   const commands = parsePathPreservingCase(pathData);
-  
+
   for (const { command, params } of commands) {
     const isUppercase = command === command.toUpperCase();
-    
+
     switch (command.toLowerCase()) {
       case 'm': // Move to
         if (isUppercase) {
@@ -348,70 +427,72 @@ function convertSvgPathDirectly(pathData, viewBoxWidth, viewBoxHeight) {
  */
 function parsePathPreservingCase(pathData) {
   const commands = [];
-  // Regex to match a command letter (case-sensitive) followed by its parameters.
-  // Parameters can be numbers, including decimals and negatives.
-  // We use a non-greedy match for parameters `.*?` to avoid over-matching
-  // and look for the next command or end of string.
-  const commandRegex = /([MmLlHhVvCcSsQqTtAaZz])\s*([^MmLlHhVvCcSsQqTtAaZz]*)/g;
 
-  let match;
-  let currentCommand = '';
-  let lastCommandType = ''; // To handle implicit L/l after M/m
+  // Normalize spaces but preserve command case
+  const normalized = pathData
+    .replace(/,/g, ' ')
+    .replace(/([MmLlHhVvCcSsQqTtAaZz])/g, ' $1 ')
+    .replace(/\s+/g, ' ')
+    .replace(/([0-9])-/g, '$1 -')
+    .trim();
 
-  while ((match = commandRegex.exec(pathData)) !== null) {
-    let command = match[1];
-    let paramsStr = match[2].trim();
+  const tokens = normalized.split(/\s+/).filter(token => token);
 
-    const paramValues = [];
-    // Regex to split parameters, handling spaces and negative signs
-    // This allows for "10-20" to be correctly split into "10" and "-20"
-    const paramSplitRegex = /([+\-]?\d*\.?\d+(?:e[+\-]?\d+)?)/g;
-    let paramMatch;
+  let i = 0;
+  while (i < tokens.length) {
+    let command = tokens[i];  // Use 'let' instead of 'const'
 
-    while ((paramMatch = paramSplitRegex.exec(paramsStr)) !== null) {
-      paramValues.push(parseFloat(paramMatch[1]));
+    if (!/[MmLlHhVvCcSsQqTtAaZz]/.test(command)) {
+      i++;
+      continue;
     }
 
-    const expectedParamCount = getParameterCount(command.toLowerCase());
+    const paramCount = getParameterCount(command.toLowerCase());
 
-    // Handle implicit commands (e.g., L after M)
-    if (command.toLowerCase() === 'm' && paramValues.length > 2) {
-      // First M/m command
-      commands.push({ command: command, params: paramValues.slice(0, 2) });
-      // Subsequent parameters are implicit L/l commands
-      for (let i = 2; i < paramValues.length; i += 2) {
-        commands.push({ command: (command === 'M' ? 'L' : 'l'), params: paramValues.slice(i, i + 2) });
-      }
-    } else {
-      // General case for all other commands and single M/m commands
-      if (expectedParamCount === 0) {
-        // Z/z commands have no parameters
-        commands.push({ command: command, params: [] });
-      } else {
-        // Handle repeated parameters for commands like L, C, S, Q, T, A
-        let pIndex = 0;
-        while (pIndex < paramValues.length) {
-          const paramsForThisCommand = paramValues.slice(pIndex, pIndex + expectedParamCount);
-          if (paramsForThisCommand.length === expectedParamCount) {
-            commands.push({ command: command, params: paramsForThisCommand });
-            pIndex += expectedParamCount;
-            // After the initial M/m, subsequent segments are implicitly L/l
-            if (command.toLowerCase() === 'm') { // Only for the first 'm' command
-              command = command === 'M' ? 'L' : 'l';
-            }
-          } else {
-            // Not enough parameters for a full command, something is off
-            console.warn(`Warning: Not enough parameters for command ${command} at ${match.index}. Expected ${expectedParamCount}, got ${paramsForThisCommand.length}.`);
-            break; // Stop processing parameters for this command
-          }
+    // Handle commands with no parameters (Z/z)
+    if (paramCount === 0) {
+      commands.push({ command, params: [] });
+      i++;
+      continue;
+    }
+
+    // Collect parameters
+    let paramIndex = i + 1;
+    while (paramIndex < tokens.length && !/[MmLlHhVvCcSsQqTtAaZz]/.test(tokens[paramIndex])) {
+      const params = [];
+
+      // Collect exactly paramCount parameters
+      for (let p = 0; p < paramCount && paramIndex < tokens.length; p++) {
+        if (!/[MmLlHhVvCcSsQqTtAaZz]/.test(tokens[paramIndex])) {
+          const num = parseFloat(tokens[paramIndex]);
+          params.push(isNaN(num) ? 0 : num);
+          paramIndex++;
+        } else {
+          break;
         }
       }
+
+      if (params.length === paramCount) {
+        commands.push({ command, params });
+      }
+
+      // For commands that can repeat (like L after M), subsequent ones are implicit L/l
+      if (command.toLowerCase() === 'm') {
+        command = command === 'M' ? 'L' : 'l';  // Now this works because command is 'let'
+      }
     }
+
+    i = paramIndex;
   }
+
   return commands;
 }
 
-// Retain the existing getParameterCount function as it is correct.
+/**
+ * Get parameter count for SVG path commands
+ * @param {string} command - Command letter (lowercase)
+ * @returns {number} - Number of parameters
+ */
 function getParameterCount(command) {
   const counts = {
     'm': 2, 'l': 2, 'h': 1, 'v': 1,
