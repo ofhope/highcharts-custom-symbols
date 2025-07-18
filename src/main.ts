@@ -3,6 +3,7 @@ import "highcharts/modules/item-series";
 
 import "../symbols/custom-primitives";
 import "../symbols/transportation";
+import "../symbols/decorative";
 
 // Symbol Gallery Chart - Visual test of all generated symbols
 // Symbol gallery chart with all generated symbols
