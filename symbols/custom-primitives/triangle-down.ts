@@ -1,14 +1,14 @@
 import Highcharts from "highcharts";
 
 // triangle-down symbol from SVG (preserving original path commands)
-// Original SVG: <path d="m236.78,211.81a24.34,24.34 0 0 1 -21.33,12.19l-174.9,0a24.34,24.34 0 0 1 -21.33,-12.19a23.51,23.51 0 0 1 0,-23.72l87.43,-151.87a24.76,24.76 0 0 1 42.7,0l87.45,151.87a23.51,23.51 0 0 1 -0.02,23.72z"/>
-// Original viewBox: 0 0 256 256
+// Original SVG: <path d="M80.125,150.794c18.257,-31.695 52.299,-51.151 88.875,-50.792l728.75,0c36.576,-0.359 70.618,19.097 88.875,50.792c17.814,30.49 17.814,68.343 0,98.833l-364.292,632.792c-18.504,31.507 -52.419,50.919 -88.958,50.919c-36.539,0 -70.453,-19.412 -88.958,-50.919l-364.375,-632.792c-17.789,-30.505 -17.757,-68.358 0.083,-98.833Z"/>
+// Original viewBox: 0 0 1067 1067
 
 Highcharts.SVGRenderer.prototype.symbols["triangle-down"] = function (x: number, y: number, w: number, h: number) {
   // Scale the original path coordinates to fit within the symbol bounds
   // Original SVG commands (M, L, C, S, Q, T, A, Z) are preserved for maximum fidelity
-  const scaleX = w / 256;
-  const scaleY = h / 256;
+  const scaleX = w / 1067;
+  const scaleY = h / 1067;
 
   // Helper functions to scale coordinates
   const sx = (coord: number) => x + coord * scaleX;  // For absolute coordinates
@@ -17,15 +17,16 @@ Highcharts.SVGRenderer.prototype.symbols["triangle-down"] = function (x: number,
   const dy = (coord: number) => coord * scaleY;       // For relative coordinates (no offset)
 
   const path = [
-    'm', dx(236.78), dy(211.81),
-    'a', dx(24.34), dy(24.34), 0, 0, 1, dx(-21.33), dy(12.19),
-    'l', dx(-174.9), dy(0),
-    'a', dx(24.34), dy(24.34), 0, 0, 1, dx(-21.33), dy(-12.19),
-    'a', dx(23.51), dy(23.51), 0, 0, 1, dx(0), dy(-23.72),
-    'l', dx(87.43), dy(-151.87),
-    'a', dx(24.76), dy(24.76), 0, 0, 1, dx(42.7), dy(0),
-    'l', dx(87.45), dy(151.87),
-    'a', dx(23.51), dy(23.51), 0, 0, 1, dx(-0.02), dy(23.72),
+    'M', sx(80.125), sy(150.794),
+    'c', dx(18.257), dy(-31.695), dx(52.299), dy(-51.151), dx(88.875), dy(-50.792),
+    'l', dx(728.75), dy(0),
+    'c', dx(36.576), dy(-0.359), dx(70.618), dy(19.097), dx(88.875), dy(50.792),
+    'c', dx(17.814), dy(30.49), dx(17.814), dy(68.343), dx(0), dy(98.833),
+    'l', dx(-364.292), dy(632.792),
+    'c', dx(-18.504), dy(31.507), dx(-52.419), dy(50.919), dx(-88.958), dy(50.919),
+    'c', dx(-36.539), dy(0), dx(-70.453), dy(-19.412), dx(-88.958), dy(-50.919),
+    'l', dx(-364.375), dy(-632.792),
+    'c', dx(-17.789), dy(-30.505), dx(-17.757), dy(-68.358), dx(0.083), dy(-98.833),
     'Z'
   ];
 
