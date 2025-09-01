@@ -1,20 +1,13 @@
 import Highcharts from "highcharts";
 
-// moped-front symbol from SVG (preserving original path commands)
-// Original SVG: <path d="M208,40H167.2a40,40,0,0,0-78.4,0H48a8,8,0,0,0,0,16H88.8a40,40,0,0,0,12.58,21.82A64.08,64.08,0,0,0,64,136v64a16,16,0,0,0,16,16H96a32,32,0,0,0,64,0h16a16,16,0,0,0,16-16V136a64.08,64.08,0,0,0-37.38-58.18A40,40,0,0,0,167.2,56H208a8,8,0,0,0,0-16ZM144,216a16,16,0,0,1-32,0V168a16,16,0,0,1,32,0ZM128,72a24,24,0,1,1,24-24A24,24,0,0,1,128,72Z"/>
-// Original viewBox: 0 0 256 256
-
 Highcharts.SVGRenderer.prototype.symbols["moped-front"] = function (x: number, y: number, w: number, h: number) {
-  // Scale the original path coordinates to fit within the symbol bounds
-  // Original SVG commands (M, L, C, S, Q, T, A, Z) are preserved for maximum fidelity
   const scaleX = w / 256;
   const scaleY = h / 256;
 
-  // Helper functions to scale coordinates
-  const sx = (coord: number) => x + coord * scaleX;  // For absolute coordinates
-  const sy = (coord: number) => y + coord * scaleY;  // For absolute coordinates
-  const dx = (coord: number) => coord * scaleX;       // For relative coordinates (no offset)
-  const dy = (coord: number) => coord * scaleY;       // For relative coordinates (no offset)
+  const sx = (coord: number) => x + coord * scaleX;
+  const sy = (coord: number) => y + coord * scaleY;
+  const dx = (coord: number) => coord * scaleX;
+  const dy = (coord: number) => coord * scaleY;
 
   const path = [
     'M', sx(208), sy(40),

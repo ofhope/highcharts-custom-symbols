@@ -1,20 +1,13 @@
 import Highcharts from "highcharts";
 
-// van symbol from SVG (preserving original path commands)
-// Original SVG: <path d="M254.07,106.79,208.53,53.73A16,16,0,0,0,196.26,48H32A16,16,0,0,0,16,64V176a16,16,0,0,0,16,16H49a32,32,0,0,0,62,0h50a32,32,0,0,0,62,0h17a16,16,0,0,0,16-16V112A8,8,0,0,0,254.07,106.79ZM32,104V64H88v40Zm48,96a16,16,0,1,1,16-16A16,16,0,0,1,80,200Zm80-96H104V64h56Zm32,96a16,16,0,1,1,16-16A16,16,0,0,1,192,200Zm-16-96V64h20.26l34.33,40Z"/>
-// Original viewBox: 0 0 256 256
-
 Highcharts.SVGRenderer.prototype.symbols["van"] = function (x: number, y: number, w: number, h: number) {
-  // Scale the original path coordinates to fit within the symbol bounds
-  // Original SVG commands (M, L, C, S, Q, T, A, Z) are preserved for maximum fidelity
   const scaleX = w / 256;
   const scaleY = h / 256;
 
-  // Helper functions to scale coordinates
-  const sx = (coord: number) => x + coord * scaleX;  // For absolute coordinates
-  const sy = (coord: number) => y + coord * scaleY;  // For absolute coordinates
-  const dx = (coord: number) => coord * scaleX;       // For relative coordinates (no offset)
-  const dy = (coord: number) => coord * scaleY;       // For relative coordinates (no offset)
+  const sx = (coord: number) => x + coord * scaleX;
+  const sy = (coord: number) => y + coord * scaleY;
+  const dx = (coord: number) => coord * scaleX;
+  const dy = (coord: number) => coord * scaleY;
 
   const path = [
     'M', sx(254.07), sy(106.79),

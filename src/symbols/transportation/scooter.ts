@@ -1,20 +1,13 @@
 import Highcharts from "highcharts";
 
-// scooter symbol from SVG (preserving original path commands)
-// Original SVG: <path d="M244,172a32,32,0,1,1-49.38-26.85l-9-26.89-51.46,62.81A8,8,0,0,1,128,184H73.66a32,32,0,1,1,2.08-16h48.47l55.46-67.69L162.23,48H136a8,8,0,0,1,0-16h32a8,8,0,0,1,7.59,5.47L209.8,140.08c.72-.05,1.46-.08,2.2-.08A32,32,0,0,1,244,172Z"/>
-// Original viewBox: 0 0 256 256
-
 Highcharts.SVGRenderer.prototype.symbols["scooter"] = function (x: number, y: number, w: number, h: number) {
-  // Scale the original path coordinates to fit within the symbol bounds
-  // Original SVG commands (M, L, C, S, Q, T, A, Z) are preserved for maximum fidelity
   const scaleX = w / 256;
   const scaleY = h / 256;
 
-  // Helper functions to scale coordinates
-  const sx = (coord: number) => x + coord * scaleX;  // For absolute coordinates
-  const sy = (coord: number) => y + coord * scaleY;  // For absolute coordinates
-  const dx = (coord: number) => coord * scaleX;       // For relative coordinates (no offset)
-  const dy = (coord: number) => coord * scaleY;       // For relative coordinates (no offset)
+  const sx = (coord: number) => x + coord * scaleX;
+  const sy = (coord: number) => y + coord * scaleY;
+  const dx = (coord: number) => coord * scaleX;
+  const dy = (coord: number) => coord * scaleY;
 
   const path = [
     'M', sx(244), sy(172),
