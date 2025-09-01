@@ -11,6 +11,7 @@
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "outDir": "dist",
+    "removeComments": true,
 
     /* Linting */
     "strict": true,
