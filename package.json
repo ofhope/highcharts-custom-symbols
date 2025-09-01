@@ -15,10 +15,10 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc",
     "preview": "vite preview",
     "convert": "node svg-converter.js",
-    "convert:svgs": "node svg-converter.js ./svgs ./src/symbols",
+    "convert:svgs": "node svg-converter.js ./svgs ./src/symbols"
   },
   "devDependencies": {
     "highcharts": "^12.3.0",
