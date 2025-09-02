@@ -1,8 +1,8 @@
 import Highcharts from "highcharts";
 import "highcharts/modules/item-series";
 
-import "../symbols/custom-primitives";
-import "../symbols/transportation";
+import "../src/symbols/custom-primitives";
+import "../src/symbols/transportation";
 
 // Symbol Gallery Chart - Visual test of all generated symbols
 // Symbol gallery chart with all generated symbols
