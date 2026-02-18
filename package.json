@@ -4,7 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "description": "Convert SVGs to dynamic draw functions for charting.",
-  "keywords": ["svg", "highcharts", "symbols", "charts"],
+  "keywords": [
+    "svg",
+    "highcharts",
+    "symbols",
+    "charts"
+  ],
   "author": "Alexis Hope",
   "license": "MIT",
   "main": "dist/index.js",
@@ -18,12 +23,26 @@
     "build": "tsc",
     "preview": "vite preview",
     "convert": "node svg-converter.js",
-    "convert:svgs": "node svg-converter.js ./svgs ./src/symbols"
+    "convert:svgs": "node svg-converter.js ./svgs ./src/symbols",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "4.1.2",
+    "@storybook/addon-a11y": "10.0.5",
+    "@storybook/addon-docs": "10.0.5",
+    "@storybook/addon-vitest": "10.0.5",
+    "@storybook/react-vite": "10.0.5",
     "highcharts": "^12.3.0",
     "highcharts-item-series": "^0.1.7",
+    "highcharts-react-official": "^3.2.3",
+    "react": "^19.2.0",
+    "storybook": "10.0.5",
     "typescript": "~5.8.3",
-    "vite": "^7.0.0"
+    "vite": "^7.0.0",
+    "vitest": "^4.0.8",
+    "playwright": "^1.56.1",
+    "@vitest/browser-playwright": "^4.0.8",
+    "@vitest/coverage-v8": "^4.0.8"
   }
 }
