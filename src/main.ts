@@ -1,7 +1,7 @@
 import Highcharts from "highcharts";
 import "highcharts/modules/item-series";
 
-import "../symbols/custom-primitives";
+import "../symbols/primitives";
 import "../symbols/transportation";
 import "../symbols/decorative";
 
