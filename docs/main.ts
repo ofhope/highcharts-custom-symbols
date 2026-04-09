@@ -2,7 +2,7 @@ import Highcharts from "highcharts";
 import "highcharts/modules/item-series";
 
 import "../symbols/primitives";
-import "../symbols/transportation";
+import "../symbols/people-analytics";
 import "../symbols/decorative";
 
 // Symbol Gallery Chart - Visual test of all generated symbols
