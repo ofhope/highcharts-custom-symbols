@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Highcharts from 'highcharts';
 import 'highcharts/modules/item-series';
 // Symbols are registered globally via Storybook preview import
@@ -27,8 +27,9 @@ export const SymbolGallery = () => {
 			credits: { enabled: false },
 			xAxis: {
 				categories: [
-					'Circle', 'Square', 'Diamond', 'Star', 'Heart', 'Moon',
-					'Pentagon', 'Hexagon', 'Octagon', 'Teardrop', 'Triangle', 'Triangle-Down',
+					'Circle', 'Square', 'Diamond',
+					'Pentagon', 'Hexagon', 'Octagon', 
+					'Teardrop', 'Triangle', 'Triangle-Down',
 				],
 				title: { text: null },
 			},
@@ -46,18 +47,15 @@ export const SymbolGallery = () => {
 					{ y: 10, marker: { symbol: 'circle',        fillColor: '#FF6B6B', radius: 14 } },
 					{ y: 20, marker: { symbol: 'square',        fillColor: '#4ECDC4', radius: 14 } },
 					{ y: 30, marker: { symbol: 'diamond',       fillColor: '#45B7D1', radius: 14 } },
-					{ y: 40, marker: { symbol: 'star',          fillColor: '#96CEB4', radius: 14 } },
-					{ y: 50, marker: { symbol: 'heart',         fillColor: '#FECA57', radius: 14 } },
-					{ y: 60, marker: { symbol: 'moon',          fillColor: '#FF9FF3', radius: 14 } },
-					{ y: 70, marker: { symbol: 'pentagon',      fillColor: '#54A0FF', radius: 14 } },
-					{ y: 80, marker: { symbol: 'hexagon',       fillColor: '#5F27CD', radius: 14 } },
-					{ y: 90, marker: { symbol: 'octagon',       fillColor: '#00D2D3', radius: 14 } },
-					{ y: 100, marker: { symbol: 'teardrop',     fillColor: '#FFA502', radius: 14 } },
-					{ y: 110, marker: { symbol: 'triangle',     fillColor: '#E84393', radius: 14 } },
-					{ y: 120, marker: { symbol: 'triangle-down', fillColor: '#6C5CE7', radius: 14 } },
+					{ y: 40, marker: { symbol: 'pentagon',      fillColor: '#54A0FF', radius: 14 } },
+					{ y: 50, marker: { symbol: 'hexagon',       fillColor: '#5F27CD', radius: 14 } },
+					{ y: 60, marker: { symbol: 'octagon',       fillColor: '#00D2D3', radius: 14 } },
+					{ y: 70, marker: { symbol: 'teardrop',     fillColor: '#FFA502', radius: 14 } },
+					{ y: 80, marker: { symbol: 'triangle',     fillColor: '#E84393', radius: 14 } },
+					{ y: 90, marker: { symbol: 'triangle-down', fillColor: '#6C5CE7', radius: 14 } },
 				],
 				marker: {
-					lineColor: '#fff',
+					lineColor: '#333',
 					lineWidth: 2,
 					states: { hover: { radius: 18, lineWidth: 2 } },
 				},
@@ -124,28 +122,28 @@ export const SubscriptionTierPerformance = () => {
 					name: 'Starter',
 					color: '#95a5a6',
 					data: [52, 55, 54, 58],
-					marker: { symbol: 'circle', radius: 13, lineColor: '#fff', lineWidth: 2 },
+					marker: { symbol: 'circle', radius: 13, lineColor: '#333', lineWidth: 2 },
 				},
 				{
 					type: 'line',
 					name: 'Pro',
 					color: '#3498db',
 					data: [64, 68, 70, 72],
-					marker: { symbol: 'diamond', radius: 13, lineColor: '#fff', lineWidth: 2 },
+					marker: { symbol: 'diamond', radius: 13, lineColor: '#333', lineWidth: 2 },
 				},
 				{
 					type: 'line',
 					name: 'Business',
 					color: '#f39c12',
 					data: [71, 76, 79, 82],
-					marker: { symbol: 'star', radius: 15, lineColor: '#fff', lineWidth: 2 },
+					marker: { symbol: 'triangle', radius: 15, lineColor: '#333', lineWidth: 2 },
 				},
 				{
 					type: 'line',
 					name: 'Enterprise',
 					color: '#9b59b6',
 					data: [80, 84, 88, 93],
-					marker: { symbol: 'hexagon', radius: 13, lineColor: '#fff', lineWidth: 2 },
+					marker: { symbol: 'hexagon', radius: 13, lineColor: '#333', lineWidth: 2 },
 				},
 			],
 		});

@@ -30,64 +30,6 @@ function convertSvgToHighchartsSymbol(pathData, symbolName, viewBox = "0 0 256 2
 
 
 
-/**
- * Convert parsed SVG commands to Highcharts path array
- * @param {Array} commands - Parsed SVG commands from svg-path-parser
- * @param {number} viewBoxWidth - Original viewBox width
- * @param {number} viewBoxHeight - Original viewBox height
- * @returns {string} - Highcharts path array code
- */
-function convertParsedPathToHighcharts(commands, viewBoxWidth, viewBoxHeight) {
-  let pathArray = [];
-
-  for (const command of commands) {
-    switch (command.code) {
-      case 'M': // Move to
-        pathArray.push(`'M', sx(${command.x}), sy(${command.y})`);
-        break;
-
-      case 'L': // Line to
-        pathArray.push(`'L', sx(${command.x}), sy(${command.y})`);
-        break;
-
-      case 'H': // Horizontal line
-        pathArray.push(`'L', sx(${command.x}), sy(${command.y || 0})`);
-        break;
-
-      case 'V': // Vertical line
-        pathArray.push(`'L', sx(${command.x || 0}), sy(${command.y})`);
-        break;
-
-      case 'C': // Cubic bezier curve
-        pathArray.push(`'C', sx(${command.x1}), sy(${command.y1}), sx(${command.x2}), sy(${command.y2}), sx(${command.x}), sy(${command.y})`);
-        break;
-
-      case 'S': // Smooth cubic bezier curve
-        pathArray.push(`'C', sx(${command.x1 || command.x}), sy(${command.y1 || command.y}), sx(${command.x2}), sy(${command.y2}), sx(${command.x}), sy(${command.y})`);
-        break;
-
-      case 'Q': // Quadratic bezier curve - preserve original command
-        pathArray.push(`'Q', sx(${command.x1}), sy(${command.y1}), sx(${command.x}), sy(${command.y})`);
-        break;
-
-      case 'T': // Smooth quadratic bezier curve - preserve original command
-        pathArray.push(`'T', sx(${command.x}), sy(${command.y})`);
-        break;
-
-      case 'A': // Arc - preserve original arc commands since Highcharts supports them
-        pathArray.push(`'A', sx(${command.rx}), sy(${command.ry}), ${command.xAxisRotation || 0}, ${command.largeArc ? 1 : 0}, ${command.sweep ? 1 : 0}, sx(${command.x}), sy(${command.y})`);
-        break;
-
-      case 'Z': // Close path
-        pathArray.push(`'Z'`);
-        break;
-    }
-  }
-
-  return `[\n    ${pathArray.join(',\n    ')}\n  ]`;
-}
-
-
 
 /**
  * Generate the complete Highcharts symbol function
@@ -309,7 +251,6 @@ Available SVG files in svgs/ directory:`);
 }
 
 // Check if this module is being run directly (ES module equivalent of require.main === module)
-import { fileURLToPath } from 'url';
 import { pathToFileURL } from 'url';
 
 const scriptPath = pathToFileURL(process.argv[1]).href;

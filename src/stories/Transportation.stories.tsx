@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Highcharts from 'highcharts';
 // Symbols are registered globally via Storybook preview import
 
@@ -53,8 +53,8 @@ export const UrbanModalShare = () => {
 			xAxis: {
 				categories: labels,
 				crosshair: true,
-				lineColor: '#ddd',
-				tickColor: '#ddd',
+				lineColor: '#333',
+				tickColor: '#333',
 			},
 			yAxis: {
 				title: { text: 'Modal Share (%)' },
@@ -76,7 +76,7 @@ export const UrbanModalShare = () => {
 						enabled: true,
 						format: '{y}%',
 						style: { fontWeight: 'bold', fontSize: '11px', textOutline: 'none' },
-						y: -4,
+						y: -40,
 					},
 				},
 				scatter: {
@@ -104,6 +104,7 @@ export const UrbanModalShare = () => {
 							symbol: mode,
 							radius: 16,
 							fillColor: colors[i],
+							lineColor: '#333',
 							lineWidth: 0,
 						},
 					})),
@@ -159,28 +160,28 @@ export const WeeklyCommuteTracker = () => {
 					name: 'Bicycle',
 					color: TRANSPORT_COLORS.bicycle,
 					data: [28, 27, 29, 28, 30],
-					marker: { symbol: 'bicycle', radius: 14, lineColor: '#fff', lineWidth: 2 },
+					marker: { symbol: 'bicycle', radius: 14, lineColor: '#333', lineWidth: 2 },
 				},
 				{
 					type: 'line',
 					name: 'Train',
 					color: TRANSPORT_COLORS.train,
 					data: [35, 34, 36, 35, 33],
-					marker: { symbol: 'train', radius: 14, lineColor: '#fff', lineWidth: 2 },
+					marker: { symbol: 'train', radius: 14, lineColor: '#333', lineWidth: 2 },
 				},
 				{
 					type: 'line',
 					name: 'Bus',
 					color: TRANSPORT_COLORS.bus,
 					data: [42, 48, 44, 50, 58],
-					marker: { symbol: 'bus', radius: 14, lineColor: '#fff', lineWidth: 2 },
+					marker: { symbol: 'bus', radius: 14, lineColor: '#333', lineWidth: 2 },
 				},
 				{
 					type: 'line',
 					name: 'Car',
 					color: TRANSPORT_COLORS.car,
 					data: [45, 52, 48, 56, 65],
-					marker: { symbol: 'car', radius: 14, lineColor: '#fff', lineWidth: 2 },
+					marker: { symbol: 'car', radius: 14, lineColor: '#333', lineWidth: 2 },
 				},
 			],
 		});
@@ -273,7 +274,7 @@ export const CostVsCarbon = () => {
 					symbol: m.symbol,
 					radius: 18,
 					fillColor: m.color,
-					lineColor: '#fff',
+					lineColor: '#333',
 					lineWidth: 2,
 				},
 			})),
