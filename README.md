@@ -57,6 +57,8 @@ import 'highcharts-custom-symbols/dist/symbols/custom-primitives';
 
 Geometrically precise shapes that extend Highcharts' default `circle`, `square`, `diamond`, and `triangle` markers.
 
+![Custom Primitive Symbols](primatives.png)
+
 | Symbol | Name |
 |---|---|
 | `circle` | Circle |
@@ -78,6 +80,8 @@ Geometrically precise shapes that extend Highcharts' default `circle`, `square`,
 Icons for transport modes — useful for urban mobility dashboards, logistics charts, and route analysis.
 
 ![Transportation Symbols](transportation.png)
+
+![Cost vs Carbon by Transport Mode](transportation-carbon.png)
 
 | Symbol | Name | Symbol | Name |
 |---|---|---|---|
@@ -106,6 +110,8 @@ Expressive icons suited to content platforms, sprint dashboards, engagement metr
 ### People Analytics
 
 Building and demographic icons for HR dashboards, housing market charts, workforce distribution, and workplace data.
+
+![Workforce Distribution by Arrangement](workfoce.png)
 
 | Symbol | Name | Symbol | Name |
 |---|---|---|---|
