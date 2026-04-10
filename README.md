@@ -64,9 +64,6 @@ Geometrically precise shapes that extend Highcharts' default `circle`, `square`,
 | `circle` | Circle |
 | `square` | Square |
 | `diamond` | Diamond |
-| `star` | Star |
-| `heart` | Heart |
-| `moon` | Moon |
 | `pentagon` | Pentagon |
 | `hexagon` | Hexagon |
 | `octagon` | Octagon |
@@ -74,6 +71,11 @@ Geometrically precise shapes that extend Highcharts' default `circle`, `square`,
 | `triangle` | Triangle |
 | `triangle-down` | Triangle Down |
 | `egg` | Egg |
+
+
+![Without this package](without.png)
+*Without this package, Highcharts falls back to generic shapes for unrecognized symbol names.*
+
 
 ### Transportation
 
