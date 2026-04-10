@@ -1,103 +1,171 @@
-highcharts-custom-symbols
-highcharts-custom-symbols is a collection of pre-defined, high-quality SVG-based symbols specifically designed for use with Highcharts. This package aims to extend Highcharts' built-in symbol library with a curated set of icons that are visually prominent and meaningful in various charting contexts.
+# highcharts-custom-symbols
 
-The symbols are generated from SVG files using a custom conversion script, ensuring optimal rendering and scalability within Highcharts charts.
+A collection of SVG-based symbols for [Highcharts](https://www.highcharts.com), extending its built-in marker library with curated icon sets for transport, people analytics, decorative, and geometric use cases.
 
-🚀 Features
-Curated Symbol Sets: Hand-picked icons optimized for clarity and readability in charts.
+Symbols are generated from SVG source files via a bundled conversion script and registered directly on `Highcharts.SVGRenderer.prototype.symbols`, so they work anywhere Highcharts accepts a marker symbol string.
 
-Easy Integration: Symbols are provided as TypeScript/JavaScript files, ready to be imported and used with Highcharts.
+---
 
-Extensible: Includes a powerful svg-converter.js script, allowing you to convert your own SVG icons into Highcharts symbols.
+## Installation
 
-📦 Included Symbol Collections (Current)
-At present, the package includes:
+```bash
+npm install highcharts-custom-symbols
+```
 
-Custom Primitives: A set of geometrically precise shapes (e.g., octagons, teardrops) designed to extend Highcharts' basic circle, square, diamond, and triangle symbols.
+`highcharts` is a peer dependency — make sure it is installed in your project.
 
-Transportation Collection: Icons representing various modes of transport, useful for logistics, urban planning, or movement-related data.
+---
+
+## Usage
+
+Import the package once at your app's entry point. This registers all symbols globally with Highcharts.
+
+```ts
+import 'highcharts-custom-symbols';
+```
+
+Then reference any symbol by name in your chart config:
+
+```ts
+import Highcharts from 'highcharts';
+import 'highcharts-custom-symbols';
+
+Highcharts.chart('container', {
+  series: [{
+    type: 'scatter',
+    data: [
+      { x: 10, y: 5,  marker: { symbol: 'bicycle' } },
+      { x: 20, y: 15, marker: { symbol: 'hexagon'  } },
+      { x: 30, y: 10, marker: { symbol: 'house'    } },
+    ]
+  }]
+});
+```
+
+You can also import individual collections if you want to keep bundle size minimal:
+
+```ts
+import 'highcharts-custom-symbols/dist/symbols/transportation';
+import 'highcharts-custom-symbols/dist/symbols/custom-primitives';
+```
+
+---
+
+## Symbol Collections
+
+### Custom Primitives
+
+Geometrically precise shapes that extend Highcharts' default `circle`, `square`, `diamond`, and `triangle` markers.
+
+| Symbol | Name |
+|---|---|
+| `circle` | Circle |
+| `square` | Square |
+| `diamond` | Diamond |
+| `star` | Star |
+| `heart` | Heart |
+| `moon` | Moon |
+| `pentagon` | Pentagon |
+| `hexagon` | Hexagon |
+| `octagon` | Octagon |
+| `teardrop` | Teardrop |
+| `triangle` | Triangle |
+| `triangle-down` | Triangle Down |
+| `egg` | Egg |
+
+### Transportation
+
+Icons for transport modes — useful for urban mobility dashboards, logistics charts, and route analysis.
 
 ![Transportation Symbols](transportation.png)
 
-🔮 Upcoming Symbol Collections
-We are actively working on expanding the library to include:
+| Symbol | Name | Symbol | Name |
+|---|---|---|---|
+| `airplane` | Airplane | `airplane-tilt` | Airplane Tilt |
+| `airplane-taxiing` | Airplane Taxiing | `bicycle` | Bicycle |
+| `boat` | Boat | `bus` | Bus |
+| `cable-car` | Cable Car | `car` | Car |
+| `moped` | Moped | `moped-front` | Moped Front |
+| `motorcycle` | Motorcycle | `sailboat` | Sailboat |
+| `scooter` | Scooter | `train` | Train |
+| `train-simple` | Train Simple | `tram` | Tram |
+| `van` | Van | | |
 
-Weather Symbols: Icons for meteorological data (e.g., sun, clouds, rain, snow).
+### Decorative
 
-People Analytics Symbols: Inclusive and clear icons for demographic and HR-related data (e.g., gender, age groups, roles).
+Expressive icons suited to content platforms, sprint dashboards, engagement metrics, and anywhere a bit of personality helps communicate the data.
 
-🛠️ Installation
-(Instructions on how to install your package will go here once it's published to npm or similar.)
+| Symbol | Name | Symbol | Name |
+|---|---|---|---|
+| `avocardo` | Avocado | `balloon` | Balloon |
+| `bomb` | Bomb | `bone` | Bone |
+| `heart` | Heart | `lightling` | Lightning |
+| `moon` | Moon | `puzzle` | Puzzle |
+| `star` | Star | `tag` | Tag |
 
-# Example (replace with your actual install command)
-npm install highcharts-custom-symbols
-# or
-yarn add highcharts-custom-symbols
+### People Analytics
 
-💡 Usage
-Once installed, you can import and apply these symbols in your Highcharts configuration.
+Building and demographic icons for HR dashboards, housing market charts, workforce distribution, and workplace data.
 
-Example: Using a Custom Symbol in a Scatter Plot
-import Highcharts from 'highcharts';
-import { myCustomOctagonSymbol } from 'highcharts-custom-symbols/symbols/custom-primitives/octagon';
-// Or import all symbols from a collection:
-// import 'highcharts-custom-symbols/symbols/custom-primitives'; // This will import all symbols from the primitives collection
+| Symbol | Name | Symbol | Name |
+|---|---|---|---|
+| `baby` | Baby | `building` | Building |
+| `building-apartment` | Apartment | `building-office` | Office |
+| `cross` | Cross | `gift` | Gift |
+| `house` | House | | |
 
-// Register the symbol with Highcharts (if not imported via index.ts which does it automatically)
-// Highcharts.SVGRenderer.prototype.symbols['octagon'] = myCustomOctagonSymbol;
+---
 
-Highcharts.chart('container', {
-    series: [{
-        type: 'scatter',
-        data: [
-            { x: 10, y: 5, marker: { symbol: 'octagon' } },
-            { x: 20, y: 15, marker: { symbol: 'circle' } }
-        ]
-    }]
-});
+## Examples
 
-Note: When you import from an index.ts file within a symbol collection (e.g., import 'highcharts-custom-symbols/symbols/custom-primitives';), the symbols are automatically registered with Highcharts.SVGRenderer.prototype.symbols. You only need to manually register if you're importing individual symbol files directly.
+Live examples are available in [Storybook](https://storybook.js.org). Run it locally with:
 
-⚙️ Generating Your Own Symbols
-The svg-converter.js script included in this project allows you to convert any SVG file into a Highcharts-compatible symbol.
+```bash
+npm run storybook
+```
 
-Prerequisites
-Node.js (LTS recommended)
+Stories cover a range of real-world chart patterns:
 
-How to Use the Converter
-Clone the repository:
+- **Column chart with symbols at bar tops** — transport mode share, sprint KPI scores, workforce distribution
+- **Multi-series line chart** — commute times by transport mode, subscription NPS by tier, property values by type
+- **Scatter chart** — cost vs carbon per transport mode
 
-git clone [https://github.com/your-username/highcharts-custom-symbols.git](https://github.com/your-username/highcharts-custom-symbols.git)
-cd highcharts-custom-symbols
+---
 
-Run the script:
+## Generating Your Own Symbols
 
-Convert a single SVG file:
+The bundled `svg-converter.js` script converts any SVG file (or directory of SVGs) into a Highcharts-compatible TypeScript symbol.
 
-node svg-converter.js path/to/your/icon.svg path/to/output/directory/
-# Example:
-# node svg-converter.js ./src/svgs/my-icons/star.svg ./symbols/my-icons/
+**Convert a single file:**
 
-Convert all SVGs in a directory (and its subdirectories):
+```bash
+node svg-converter.js ./svgs/my-icon.svg ./src/symbols/my-collection/
+```
 
-node svg-converter.js path/to/your/svgs/folder/ path/to/output/directory/
-# Example: This will mirror the folder structure from src/svgs/material to symbols/material
-# node svg-converter.js ./src/svgs/material/ ./symbols/material/
-# Example: This will process all svgs and subdirectories from src/svgs to symbols/
-# node svg-converter.js ./src/svgs/ ./symbols/
+**Convert an entire directory (mirrors folder structure):**
 
-The script will automatically create output folders and an index.ts file within each folder, importing and re-exporting the generated symbols.
+```bash
+node svg-converter.js ./svgs/my-collection/ ./src/symbols/my-collection/
+```
 
-🤝 Contributing
-We welcome contributions! If you have ideas for new symbol sets, improvements to existing ones, or enhancements to the converter script, please feel free to open an issue or submit a pull request.
+The script generates one `.ts` file per SVG and an `index.ts` barrel in each output directory. SVG path commands (`M`, `L`, `C`, `A`, etc.) are preserved and scaled to Highcharts' symbol coordinate system at render time.
 
-📜 Credits & Licensing
-This project utilizes and converts open-source SVG icons. We are committed to crediting the original creators and respecting their licenses.
+**Requirements:** Node.js (LTS)
 
-[Icon Pack Name 1]: Sourced from [Link to original source, e.g., Material Design Icons]. Licensed under [License Type, e.g., Apache 2.0].
+---
 
-[Icon Pack Name 2]: Sourced from [Link to original source, e.g., Phosphor Icons]. Licensed under [License Type, e.g., MIT License].
+## Contributing
 
-(Add more entries as you include more icon packs)
+Contributions are welcome — new symbol sets, converter improvements, or additional Storybook examples. Open an issue or submit a pull request.
 
-The highcharts-custom-symbols project itself is licensed under the [Your License, e.g., MIT License].
+---
+
+## Credits
+
+SVG source icons are from [Phosphor Icons](https://phosphoricons.com), a flexible icon family by Tobias Fried and Helena Zhang, licensed under the [MIT License](https://github.com/phosphor-icons/core/blob/main/LICENSE).
+
+---
+
+## License
+
+MIT © Alexis Hope
