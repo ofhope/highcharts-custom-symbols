@@ -1,6 +1,6 @@
 {
   "name": "highcharts-custom-symbols",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
   "type": "module",
   "description": "Convert SVGs to dynamic draw functions for charting.",
@@ -26,6 +26,9 @@
     "convert:svgs": "node svg-converter.js ./svgs ./src/symbols",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
+  },
+  "peerDependencies": {
+    "highcharts": "^12.3.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "4.1.2",
