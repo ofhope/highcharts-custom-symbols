@@ -57,7 +57,7 @@ import 'highcharts-custom-symbols/dist/symbols/custom-primitives';
 
 Geometrically precise shapes that extend Highcharts' default `circle`, `square`, `diamond`, and `triangle` markers.
 
-![Custom Primitive Symbols](primatives.png)
+![Custom Primitive Symbols](https://raw.githubusercontent.com/ofhope/highcharts-custom-symbols/main/primatives.png)
 
 | Symbol | Name |
 |---|---|
@@ -73,7 +73,7 @@ Geometrically precise shapes that extend Highcharts' default `circle`, `square`,
 | `egg` | Egg |
 
 
-![Without this package](without.png)
+![Without this package](https://raw.githubusercontent.com/ofhope/highcharts-custom-symbols/main/without.png)
 *Without this package, Highcharts falls back to generic shapes for unrecognized symbol names.*
 
 
@@ -81,9 +81,9 @@ Geometrically precise shapes that extend Highcharts' default `circle`, `square`,
 
 Icons for transport modes — useful for urban mobility dashboards, logistics charts, and route analysis.
 
-![Transportation Symbols](transportation.png)
+![Transportation Symbols](https://raw.githubusercontent.com/ofhope/highcharts-custom-symbols/main/transportation.png)
 
-![Cost vs Carbon by Transport Mode](transportation-carbon.png)
+![Cost vs Carbon by Transport Mode](https://raw.githubusercontent.com/ofhope/highcharts-custom-symbols/main/transportation-carbon.png)
 
 | Symbol | Name | Symbol | Name |
 |---|---|---|---|
@@ -113,7 +113,7 @@ Expressive icons suited to content platforms, sprint dashboards, engagement metr
 
 Building and demographic icons for HR dashboards, housing market charts, workforce distribution, and workplace data.
 
-![Workforce Distribution by Arrangement](workfoce.png)
+![Workforce Distribution by Arrangement](https://raw.githubusercontent.com/ofhope/highcharts-custom-symbols/main/workfoce.png)
 
 | Symbol | Name | Symbol | Name |
 |---|---|---|---|
