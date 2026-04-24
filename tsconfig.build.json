@@ -1,0 +1,23 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "dist"
+  },
+  "include": [
+    "src/register.ts",
+    "src/index.ts",
+    "src/primitives.ts",
+    "src/primitives-override.ts",
+    "src/decorative.ts",
+    "src/transportation.ts",
+    "src/people-analytics.ts",
+    "src/symbols/**/*.ts"
+  ],
+  "exclude": [
+    "src/stories",
+    "svgs",
+    "docs"
+  ]
+}

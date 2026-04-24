@@ -12,24 +12,57 @@
   ],
   "author": "Alexis Hope",
   "license": "MIT",
+
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "sideEffects": true,
+
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./primitives": {
+      "import": "./dist/primitives.js",
+      "types": "./dist/primitives.d.ts"
+    },
+    "./primitives-override": {
+      "import": "./dist/primitives-override.js",
+      "types": "./dist/primitives-override.d.ts"
+    },
+    "./decorative": {
+      "import": "./dist/decorative.js",
+      "types": "./dist/decorative.d.ts"
+    },
+    "./transportation": {
+      "import": "./dist/transportation.js",
+      "types": "./dist/transportation.d.ts"
+    },
+    "./people-analytics": {
+      "import": "./dist/people-analytics.js",
+      "types": "./dist/people-analytics.d.ts"
+    }
+  },
+
   "files": [
     "dist",
     "README.md"
   ],
+
   "scripts": {
     "dev": "vite",
-    "build": "tsc",
+    "build": "node build.mjs",
     "preview": "vite preview",
     "convert": "node svg-converter.js",
     "convert:svgs": "node svg-converter.js ./svgs ./src/symbols",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
+
   "peerDependencies": {
     "highcharts": "^12.3.0"
   },
+
   "devDependencies": {
     "@chromatic-com/storybook": "4.1.2",
     "@storybook/addon-a11y": "10.0.5",

@@ -1,10 +1,8 @@
-import Highcharts from "highcharts";
-
 // circle-half-tilt symbol from SVG (preserving original path commands)
 // Original SVG: <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM40,128A88,88,0,0,1,190.2,65.8L65.8,190.2A87.76,87.76,0,0,1,40,128Z"/>
 // Original viewBox: 0 0 256 256
 
-Highcharts.SVGRenderer.prototype.symbols["circle-half-tilt"] = function (x: number, y: number, w: number, h: number) {
+export const circleHalfTilt = function (x: number, y: number, w: number, h: number) {
   // Scale the original path coordinates to fit within the symbol bounds
   // Original SVG commands (M, L, C, S, Q, T, A, Z) are preserved for maximum fidelity
   const scaleX = w / 256;

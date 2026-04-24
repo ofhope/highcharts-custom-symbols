@@ -1,6 +1,20 @@
 import type { Preview } from '@storybook/react-vite'
-// Import Highcharts plugin symbols for global registration
-import '../dist/index';
+import Highcharts from 'highcharts';
+import {
+  primitives,
+  decorative,
+  transportation,
+  peopleAnalytics,
+  registerSymbols,
+} from '../src/index.js';
+
+// Register all symbol sets for use across every story
+registerSymbols(
+  { ...primitives, ...decorative, ...transportation, ...peopleAnalytics },
+  Highcharts
+);
+// Also register primitives under the non-invasive 'primitive-*' prefix
+registerSymbols(primitives, Highcharts, { prefix: 'primitive' });
 
 const preview: Preview = {
   parameters: {

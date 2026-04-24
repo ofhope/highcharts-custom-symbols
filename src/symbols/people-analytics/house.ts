@@ -1,10 +1,8 @@
-import Highcharts from "highcharts";
-
 // house symbol from SVG (preserving original path commands)
 // Original SVG: <path d="M224,120v96a8,8,0,0,1-8,8H160a8,8,0,0,1-8-8V164a4,4,0,0,0-4-4H108a4,4,0,0,0-4,4v52a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V120a16,16,0,0,1,4.69-11.31l80-80a16,16,0,0,1,22.62,0l80,80A16,16,0,0,1,224,120Z"/>
 // Original viewBox: 0 0 256 256
 
-Highcharts.SVGRenderer.prototype.symbols["house"] = function (x: number, y: number, w: number, h: number) {
+export const house = function (x: number, y: number, w: number, h: number) {
   // Scale the original path coordinates to fit within the symbol bounds
   // Original SVG commands (M, L, C, S, Q, T, A, Z) are preserved for maximum fidelity
   const scaleX = w / 256;

@@ -1,10 +1,8 @@
-import Highcharts from "highcharts";
-
 // bone symbol from SVG (preserving original path commands)
 // Original SVG: <path d="M231.12,107.72a35.91,35.91,0,0,1-46.19,6.8.14.14,0,0,0-.1,0l-70.35,70.36s0,0,0,.08a36,36,0,1,1-66.37,22.92,36,36,0,1,1,22.92-66.37.14.14,0,0,0,.1,0l70.35-70.36s0,0,0-.08a36,36,0,1,1,66.37-22.92,36,36,0,0,1,23.27,59.57Z"/>
 // Original viewBox: 0 0 256 256
 
-Highcharts.SVGRenderer.prototype.symbols["bone"] = function (x: number, y: number, w: number, h: number) {
+export const bone = function (x: number, y: number, w: number, h: number) {
   // Scale the original path coordinates to fit within the symbol bounds
   // Original SVG commands (M, L, C, S, Q, T, A, Z) are preserved for maximum fidelity
   const scaleX = w / 256;

@@ -1,0 +1,15 @@
+# Storybook story files are dev-only — not needed in the npm package
+dist/stories/
+
+# Legacy build artefact — superseded by dist/symbols/primitives/
+dist/symbols/custom-primitives/
+
+# Source / dev tooling
+src/
+svgs/
+docs/
+scripts/
+.storybook/
+*.config.*
+tsconfig*.json
+build.mjs

@@ -1,10 +1,8 @@
-import Highcharts from "highcharts";
-
 // tag symbol from SVG (preserving original path commands)
 // Original SVG: <path d="M243.31,136,144,36.69A15.86,15.86,0,0,0,132.69,32H40a8,8,0,0,0-8,8v92.69A15.86,15.86,0,0,0,36.69,144L136,243.31a16,16,0,0,0,22.63,0l84.68-84.68a16,16,0,0,0,0-22.63ZM84,96A12,12,0,1,1,96,84,12,12,0,0,1,84,96Z"/>
 // Original viewBox: 0 0 256 256
 
-Highcharts.SVGRenderer.prototype.symbols["tag"] = function (x: number, y: number, w: number, h: number) {
+export const tag = function (x: number, y: number, w: number, h: number) {
   // Scale the original path coordinates to fit within the symbol bounds
   // Original SVG commands (M, L, C, S, Q, T, A, Z) are preserved for maximum fidelity
   const scaleX = w / 256;

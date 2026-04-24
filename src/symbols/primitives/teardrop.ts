@@ -1,10 +1,8 @@
-import Highcharts from "highcharts";
-
 // teardrop symbol from SVG (preserving original path commands)
 // Original SVG: <path d="M174,47.75a254.19,254.19,0,0,0-41.45-38.3,8,8,0,0,0-9.18,0A254.19,254.19,0,0,0,82,47.75C54.51,79.32,40,112.6,40,144a88,88,0,0,0,176,0C216,112.6,201.49,79.32,174,47.75Z"/>
 // Original viewBox: 0 0 256 256
 
-Highcharts.SVGRenderer.prototype.symbols["teardrop"] = function (x: number, y: number, w: number, h: number) {
+export const teardrop = function (x: number, y: number, w: number, h: number) {
   // Scale the original path coordinates to fit within the symbol bounds
   // Original SVG commands (M, L, C, S, Q, T, A, Z) are preserved for maximum fidelity
   const scaleX = w / 256;

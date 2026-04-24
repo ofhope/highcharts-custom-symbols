@@ -1,10 +1,8 @@
-import Highcharts from "highcharts";
-
 // pentagon symbol from SVG (preserving original path commands)
 // Original SVG: <path d="M955.272,438.28l-133.333,448.083l-0.25,0.709c-8.761,27.491 -34.48,46.273 -63.333,46.25l-466.667,-0c-28.853,0.023 -54.572,-18.759 -63.333,-46.25l-0.25,-0.709l-133.334,-448.083c-8.488,-26.979 1.074,-56.555 23.75,-73.458l366.334,-284.625l0.75,-0.584c23.367,-17.247 55.466,-17.247 78.833,0l0.75,0.584l366.333,284.625c22.676,16.903 32.238,46.479 23.75,73.458Z"/>
 // Original viewBox: 0 0 1067 1067
 
-Highcharts.SVGRenderer.prototype.symbols["pentagon"] = function (x: number, y: number, w: number, h: number) {
+export const pentagon = function (x: number, y: number, w: number, h: number) {
   // Scale the original path coordinates to fit within the symbol bounds
   // Original SVG commands (M, L, C, S, Q, T, A, Z) are preserved for maximum fidelity
   const scaleX = w / 1067;

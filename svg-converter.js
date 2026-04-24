@@ -32,26 +32,39 @@ function convertSvgToHighchartsSymbol(pathData, symbolName, viewBox = "0 0 256 2
 
 
 /**
- * Generate the complete Highcharts symbol function
- * @param {string} symbolName - Symbol name
+ * Convert a kebab-case symbol name to a camelCase JS identifier.
+ * @param {string} name - e.g. "airplane-tilt"
+ * @returns {string}    - e.g. "airplaneTilt"
+ */
+function toCamelCase(name) {
+  return name.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase());
+}
+
+/**
+ * Generate the complete Highcharts symbol function.
+ *
+ * Produces a *pure* named export — registration is handled by the entry-point
+ * files (src/transportation.ts, src/primitives.ts, etc.) so the same function
+ * can be registered under different keys without duplication.
+ *
+ * @param {string} symbolName - Symbol name (kebab-case, e.g. "airplane-tilt")
  * @param {string} originalPath - Original SVG path
  * @param {string} viewBox - Original viewBox
  * @param {string|null} pathCode - Generated path code (null for fallback)
- * @returns {string} - Complete TypeScript function
+ * @returns {string} - Complete TypeScript module
  */
 function generateHighchartsFunction(symbolName, originalPath, viewBox, pathCode) {
   const viewBoxParts = viewBox.split(' ');
   const vbWidth = viewBoxParts[2];
   const vbHeight = viewBoxParts[3];
+  const exportName = toCamelCase(symbolName);
 
   // Use the parsed path with original SVG commands preserved
-  return `import Highcharts from "highcharts";
-
-// ${symbolName} symbol from SVG (preserving original path commands)
+  return `// ${symbolName} symbol from SVG (preserving original path commands)
 // Original SVG: <path d="${originalPath}"/>
 // Original viewBox: ${viewBox}
 
-Highcharts.SVGRenderer.prototype.symbols["${symbolName}"] = function (x: number, y: number, w: number, h: number) {
+export const ${exportName} = function (x: number, y: number, w: number, h: number) {
   // Scale the original path coordinates to fit within the symbol bounds
   // Original SVG commands (M, L, C, S, Q, T, A, Z) are preserved for maximum fidelity
   const scaleX = w / ${vbWidth};
@@ -66,7 +79,7 @@ Highcharts.SVGRenderer.prototype.symbols["${symbolName}"] = function (x: number,
   const path = ${pathCode};
 
   return path;
-};`;
+};
 }
 
 /**

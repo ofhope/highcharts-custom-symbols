@@ -1,10 +1,8 @@
-import Highcharts from "highcharts";
-
 // circle-half symbol from SVG (preserving original path commands)
 // Original SVG: <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM40,128a88.1,88.1,0,0,1,88-88V216A88.1,88.1,0,0,1,40,128Z"/>
 // Original viewBox: 0 0 256 256
 
-Highcharts.SVGRenderer.prototype.symbols["circle-half"] = function (x: number, y: number, w: number, h: number) {
+export const circleHalf = function (x: number, y: number, w: number, h: number) {
   // Scale the original path coordinates to fit within the symbol bounds
   // Original SVG commands (M, L, C, S, Q, T, A, Z) are preserved for maximum fidelity
   const scaleX = w / 256;
